@@ -1,17 +1,33 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 
-type PracticePageProps = {
-  onComplete: () => void;
+type ResultStats = {
+  totalProblems: number;
+  problemsWithMistakes: number;
+  totalMistakes: number;
 };
 
-const problems = [
-  { n1: 3, n2: 2, op: "x", answer: 6 },
-  { n1: 2, n2: 7, op: "x", answer: 14 },
-  { n1: 7, n2: 7, op: "x", answer: 49 },
+type Problem = {
+  n1: number;
+  n2: number;
+  op: string;
+  answer: number;
+  answerDigits: number;
+  mistakes: number;
+};
+
+type PracticePageProps = {
+  onComplete: (stats: ResultStats) => void;
+};
+
+const initialProblems: Problem[] = [
+  { n1: 3, n2: 2, op: "x", answer: 6, answerDigits: 1, mistakes: 0 },
+  { n1: 2, n2: 7, op: "x", answer: 14, answerDigits: 2, mistakes: 0 },
+  { n1: 7, n2: 7, op: "x", answer: 49, answerDigits: 2, mistakes: 0 },
 ];
 
-export default function PracticePage({ onComplete }: PracticePageProps) {
+function PracticePage({ onComplete }: PracticePageProps) {
+  const [problems, setProblems] = useState(initialProblems);
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
@@ -27,7 +43,19 @@ export default function PracticePage({ onComplete }: PracticePageProps) {
       setError("");
 
       if (index === problems.length - 1) {
-        onComplete();
+        const totalMistakes = problems.reduce(
+          (sum, problem) => sum + problem.mistakes,
+          0,
+        );
+        const problemsWithMistakes = problems.filter(
+          (problem) => problem.mistakes > 0,
+        ).length;
+
+        onComplete({
+          totalProblems: problems.length,
+          problemsWithMistakes,
+          totalMistakes,
+        });
         return;
       }
 
@@ -35,6 +63,11 @@ export default function PracticePage({ onComplete }: PracticePageProps) {
       return;
     }
 
+    setProblems((currentProblems) =>
+      currentProblems.map((problem, i) =>
+        i === index ? { ...problem, mistakes: problem.mistakes + 1 } : problem,
+      ),
+    );
     setError("That answer is not correct. Try again.");
   };
 
@@ -81,3 +114,5 @@ export default function PracticePage({ onComplete }: PracticePageProps) {
     </main>
   );
 }
+
+export default PracticePage;

@@ -2,7 +2,7 @@ type LandingPageProps = {
   onStart: () => void;
 };
 
-export default function LandingPage({ onStart }: LandingPageProps) {
+function LandingPage({ onStart }: LandingPageProps) {
   return (
     <main className="flex min-h-screen items-center justify-center p-6">
       <section className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -23,3 +23,5 @@ export default function LandingPage({ onStart }: LandingPageProps) {
     </main>
   );
 }
+
+export default LandingPage;

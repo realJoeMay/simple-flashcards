@@ -1,73 +1,84 @@
-# React + TypeScript + Vite
+# Simple Flashcards
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A small React + TypeScript math flashcard app built with Vite and Tailwind CSS.
 
-Currently, two official plugins are available:
+The app currently walks through a fixed set of multiplication problems, tracks incorrect attempts, and shows a summary when practice is complete.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Landing page with a start action
+- Multiplication practice flow
+- Immediate feedback for incorrect answers
+- Mistake tracking per problem
+- Results page with total problems, problems with mistakes, and total mistakes
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS
+- ESLint
+- Prettier
+- Vitest
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+Install dependencies:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Start the development server:
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
-
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+npm run dev
 ```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+## Scripts
+
+- `npm run dev` - start the Vite development server
+- `npm run build` - type-check and build the production bundle
+- `npm run preview` - preview the production build locally
+- `npm run lint` - run ESLint
+- `npm run format` - format files with Prettier
+- `npm run format:check` - check formatting without writing changes
+- `npm run test` - run Vitest in watch mode
+- `npm run test:run` - run Vitest once
+
+## Project Structure
+
+```text
+src/
+  App.tsx                 App-level page state
+  main.tsx                React entry point
+  index.css               Global styles
+  pages/
+    LandingPage.tsx       Start screen
+    PracticePage.tsx      Flashcard practice flow
+    ResultsPage.tsx       Practice summary
+docs/
+  architecture.md
+  requirements.md
+  roadmap.md
+```
+
+## Current Limitations
+
+- The problem set is hard-coded in `src/pages/PracticePage.tsx`.
+- Practice covers multiplication only.
+- Progress is not persisted across page reloads.
+- The docs files are placeholders.
