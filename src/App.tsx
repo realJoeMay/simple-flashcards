@@ -1,20 +1,22 @@
+import { useState } from "react";
+import LandingPage from "./pages/LandingPage";
+import PracticePage from "./pages/PracticePage";
+import ResultsPage from "./pages/ResultsPage";
+
+type Page = "landing" | "practice" | "results";
+
 function App() {
+  const [page, setPage] = useState<Page>("landing");
+
   return (
-    <main className="flex min-h-screen items-center justify-center p-6">
-      <section className="w-full max-w-lg rounded-2xl border p-8 shadow-sm">
-        <h1 className="text-3xl font-bold">Math Flashcards</h1>
-
-        <p className="mt-3 text-lg">
-          The React, TypeScript, Vite, and Tailwind setup is working.
-        </p>
-
-        <button
-          className="mt-6 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white"
-          type="button"
-        >
-          Start Practice
-        </button>
-      </section>
+    <main className="min-h-screen bg-slate-50 p-6">
+      {page === "landing" ? (
+        <LandingPage onStart={() => setPage("practice")} />
+      ) : page === "practice" ? (
+        <PracticePage onComplete={() => setPage("results")} />
+      ) : (
+        <ResultsPage onRestart={() => setPage("landing")} />
+      )}
     </main>
   );
 }
